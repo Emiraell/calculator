@@ -1,0 +1,6 @@
+.calBtn {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  max-width: 250px;
+  column-gap: 5px;
+}
