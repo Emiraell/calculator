@@ -11,7 +11,7 @@ calArr.forEach((calValue) => {
     calHtml += `<button id = "evalBtn" class = "evalBtn">${calValue}</button>`
     
   } else if (calValue === 'AC' || calValue === ' ** ' || calValue === ' % ') {
-    calHtml += `<button id = "upBtn" class = "upBtn">${calValue}</button>`
+    calHtml += `<button id ="upBtn" class = "upBtn">${calValue}</button>`
   } else {
   calHtml += `<button id = "valueBtn" class = "valueBtn">${calValue}</button>`
   }
@@ -21,6 +21,10 @@ calArr.forEach((calValue) => {
 
 let calculated = ''
 function calculation (val) {
+
+  if (calculated === 0) {
+    calculated = ''
+  }
   
   if (val === 'AC') {
     calculated = 0;
@@ -30,31 +34,32 @@ function calculation (val) {
   calculated += val;
   }
   
-  console.log('calculated')
+  //console.log('calculated')
   console.log(calculated)
+  document.getElementById('outcome').innerHTML = calculated
 }
 
-calculation ()
+//calculation ()
 
 
 document.querySelectorAll('.evalBtn').forEach ((buttons) => {
   buttons.addEventListener ('click', () => {
     calculation (buttons.innerHTML);
-    console.log(buttons.innerHTML)
+    //console.log(buttons.innerHTML)
   })
 })
 
-document.querySelectorAll('.up').forEach ((buttons) => {
+document.querySelectorAll('.upBtn').forEach ((buttons) => {
   buttons.addEventListener ('click', () => {
     calculation (buttons.innerHTML);
-    console.log(buttons.innerHTML)
+    //console.log(buttons.innerHTML)
   })
 })
 
 document.querySelectorAll('.valueBtn').forEach ((buttons) => {
   buttons.addEventListener ('click', () => {
     calculation (buttons.innerHTML);
-    console.log(buttons.innerHTML)
+    //console.log(buttons.innerHTML)
   })
 })
 
