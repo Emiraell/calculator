@@ -1,7 +1,6 @@
-
 let calArr = [
-  'AC',' ** ', 'round', ' / ', 7, 8, 9, ' * ', 
-  4, 5, 6, ' - ', 1, 2, 3, ' + ', 0, '.', '=', 'DEL'
+  'AC','^', 'round', ' / ', 7, 8, 9, ' * ', 
+  4, 5, 6, ' - ', 1, 2, 3, ' + ', 0, '.', 'DEL', '='
 ];
 
 let calHtml = ''
@@ -10,7 +9,7 @@ calArr.forEach((calValue) => {
   if (calValue === ' / ' || calValue === ' * ' || calValue === ' - ' || calValue === ' + ') {
     calHtml += `<button id = "evalBtn" class = "evalBtn">${calValue}</button>`
     
-  } else if (calValue === 'AC' || calValue === ' ** ' || calValue === 'round') {
+  } else if (calValue === 'AC' || calValue === '^' || calValue === 'round') {
     calHtml += `<button id ="upBtn" class = "upBtn">${calValue}</button>`
   } else {
   calHtml += `<button id = "valueBtn" class = "valueBtn">${calValue}</button>`
@@ -19,15 +18,19 @@ calArr.forEach((calValue) => {
 })
 
 
-let calculated = ''
+let calculated = JSON.parse(localStorage.getItem('outcome')) || ''
+document.getElementById('outcome').innerHTML = calculated
+ 
+
 function calculation (val) {
 
-  if (calculated === 0) {
-    calculated = ''
-  }
+  //if (calculated === 0) {
+    //calculated = ''
+  //}
   
   if (val === 'AC') {
-    calculated = 0;
+    calculated = '';
+    localStorage.removeItem('outcome')
   } else if (val === '=') {
      calculated = eval(calculated)
   } else if (val === 'round') {
@@ -38,10 +41,14 @@ function calculation (val) {
       calculated = 0
     }
     console.log(calculated)
-  } else {
+  } else if (val === '^') {
+    calculated = eval(calculated * calculated);
+   } else {
+    
+    //calculated = calculated.slice(0, -1)
   calculated += val;
   }
-  
+  localStorage.setItem('outcome', JSON.stringify(calculated))
   //console.log('calculated')
   console.log(calculated)
   document.getElementById('outcome').innerHTML = calculated
