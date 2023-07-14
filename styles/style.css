@@ -1,6 +1,19 @@
+body button {
+  color: white;
+}
 .calBtn {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   max-width: 250px;
   column-gap: 5px;
+  row-gap: 5px;
+}
+.evalBtn {
+  background-color: orangered;
+}
+.upBtn {
+  background-color: rgb(88, 84, 79);
+}
+.valueBtn {
+  background-color: rgb(15, 14, 14);
 }
