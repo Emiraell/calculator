@@ -1,32 +1,29 @@
-let calArr = [
+let values = [
   'AC','^', 'round', ' / ', 7, 8, 9, ' * ', 
   4, 5, 6, ' - ', 1, 2, 3, ' + ', 0, '.', 'DEL', '='
 ];
 
-let calHtml = ''
-calArr.forEach((calValue) => {
+let valuesHtml = ''
+values.forEach((value) => {
   
-  if (calValue === ' / ' || calValue === ' * ' || calValue === ' - ' || calValue === ' + ') {
-    calHtml += `<button id = "evalBtn" class = "evalBtn">${calValue}</button>`
-    
-  } else if (calValue === 'AC' || calValue === '^' || calValue === 'round') {
-    calHtml += `<button id ="upBtn" class = "upBtn">${calValue}</button>`
+  if (value === ' / ' || value === ' * ' || value === ' - ' || value === ' + ') {
+    valuesHtml += `<button id = "evalBtn" class = "evalBtn">${value}</button>`
+  } else if (value === 'AC' || value === '^' || value === 'round') {
+    valuesHtml += `<button id ="upBtn" class = "upBtn">${value}</button>`
   } else {
-  calHtml += `<button id = "valueBtn" class = "valueBtn">${calValue}</button>`
+    valuesHtml += `<button id = "valueBtn" class = "valueBtn">${value}</button>`
   }
-  document.querySelector('.cal-btn').innerHTML = calHtml
+  document.querySelector('.cal-btn').innerHTML = valuesHtml
 })
-
 
 let calculated = JSON.parse(localStorage.getItem('outcome')) || ''
 document.getElementById('outcome').innerHTML = calculated
  
-
 function calculation (val) {
 
-  //if (calculated === 0) {
-    //calculated = ''
-  //}
+  if (calculated === 0) {
+    calculated = ''
+  }
   
   if (val === 'AC') {
     calculated = '';
@@ -36,6 +33,7 @@ function calculation (val) {
   } else if (val === 'round') {
     calculated = Math.ceil(eval(calculated))
   } else if (val === 'DEL') {
+    calculated += ''
     calculated = calculated.slice(0, -1)
     if (calculated === '') {
       calculated = 0
@@ -43,7 +41,7 @@ function calculation (val) {
     console.log(calculated)
   } else if (val === '^') {
     calculated = eval(calculated * calculated);
-   } else {
+  } else {
     
     //calculated = calculated.slice(0, -1)
   calculated += val;
@@ -51,30 +49,13 @@ function calculation (val) {
   localStorage.setItem('outcome', JSON.stringify(calculated))
   //console.log('calculated')
   console.log(calculated)
-  document.getElementById('outcome').innerHTML = calculated
+  document.getElementById('outcome').innerHTML =`<div>${calculated}</div>`
 }
 
-//calculation ()
 
-
-/*document.querySelectorAll('.evalBtn').forEach ((buttons) => {
-  buttons.addEventListener ('click', () => {
-    calculation (buttons.innerHTML);
-    //console.log(buttons.innerHTML)
-  })
-})
-
-document.querySelectorAll('.upBtn').forEach ((buttons) => {
-  buttons.addEventListener ('click', () => {
-    calculation (buttons.innerHTML);
-    //console.log(buttons.innerHTML)
-  })
-})*/
-
-document.querySelectorAll('button').forEach ((buttons) => {
-  buttons.addEventListener ('click', () => {
-    calculation (buttons.innerHTML);
-    //console.log(buttons.innerHTML)
+document.querySelectorAll('button').forEach ((button) => {
+  button.addEventListener ('click', () => {
+    calculation (button.innerHTML);
   })
 })
 
