@@ -15,6 +15,8 @@ values.forEach((value) => {
     valuesHtml += `<button id = "operatorBtn" class = "operators-btn">${value}</button>`;
   } else if (value === 'AC' || value === '^' || value === 'DEL') {
     valuesHtml += `<button id ="upperBtn" class = "upper-btn">${value}</button>`;
+  } else if (value === '=') {
+    valuesHtml += `<button id ="equalBtn" class = "equal-btn">${value}</button>`;
   } else {
     valuesHtml += `<button id = "numbersBtn" class = "numbers-btn">${value}</button>`;
   }
