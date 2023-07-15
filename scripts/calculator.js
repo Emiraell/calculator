@@ -1,17 +1,17 @@
 // values to be used
 let values = [
-  'AC','DEL', '^', ' / ', 
-  7, 8, 9, ' * ', 
-  4, 5, 6, ' - ',
-  1, 2, 3, ' + ',
+  'AC','DEL', '^', '/', 
+  7, 8, 9, '*', 
+  4, 5, 6, '-',
+  1, 2, 3, '+',
   0, '.', 'round', '='
 ];
 
 //generating the html buttons for each value  and placing them on the webpage
 let valuesHtml = '';
 values.forEach((value) => {
-  
-  if (value === ' / ' || value === ' * ' || value === ' - ' || value === ' + ') {
+    
+  if (value === '/' || value === '*' || value === '-' || value === '+') {
     valuesHtml += `<button id = "operatorBtn" class = "operators-btn">${value}</button>`;
   } else if (value === 'AC' || value === '^' || value === 'DEL') {
     valuesHtml += `<button id ="upperBtn" class = "upper-btn">${value}</button>`;
@@ -27,7 +27,7 @@ values.forEach((value) => {
 let calculate = JSON.parse(localStorage.getItem('outcome')) || 0;
 document.getElementById('outcome').innerHTML = calculate
  
-//the necessary calculations
+//function to run the calculation
 function calculation (val) {
 
   // avoid inserting zero at the start of each calculation
@@ -41,9 +41,11 @@ function calculation (val) {
   } else if (val === '=') {
     // calculating the calculate(which is in strings) using the eval function 
      calculate = eval(calculate)
+
      if (calculate === undefined) {
       calculate = 0;
      }  
+
   } else if (val === 'round') {
     //round the calculation to a whole number
     calculate = Math.ceil(eval(calculate));
@@ -51,9 +53,11 @@ function calculation (val) {
     //convert to string in places where the = button was used;
     calculate += '';
     calculate = calculate.slice(0, -1);
+
     if (calculate === '') {
       calculate = 0;
     }
+
   } else if (val === '^') {
     //raising the calculate to a an X number;
     calculate += '**';
@@ -61,19 +65,31 @@ function calculation (val) {
     calculate += val;
   }
 
-  /*manipulate the innerHTML of the AC buttons in cases
+  /*manipulated the innerHTML of the AC button in cases
   of calculations or no calculations*/
   if (calculate != 0) {
     document.getElementById('upperBtn').innerHTML = 'C';
   } else {
     document.getElementById('upperBtn').innerHTML = 'AC';
   }
-  
+
+  MaxRenderValue ();
   //store calculation in local storage to avoid lose of data;
   localStorage.setItem('outcome', JSON.stringify(calculate));
+ 
   //rendering the calculations
   document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`;
+
 };
+
+// to prevent the output calculation from overfloating
+const MaxRenderValue = () => {
+  const maxWord = 18;
+  if (calculate.length > maxWord) {
+    const wordToCut = calculate.length - maxWord
+    calculate = calculate.slice(0, -wordToCut)
+  }
+}
 
 //event listener for all buttons
 document.querySelectorAll('button').forEach ((button) => {
