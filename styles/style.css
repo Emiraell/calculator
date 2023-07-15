@@ -3,12 +3,12 @@ body {
   max-width: 350px;
   color:  #d0cccc;
   padding: 3% 0 0 5%;
+  font-family: Roboto, Arial;
 }
 
 header {
   margin: 7%;
   padding-bottom: 3%;
-  font-style: italic;
 }
 
 .outcomeDiv {
