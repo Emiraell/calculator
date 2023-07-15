@@ -1,55 +1,65 @@
 let values = [
-  'AC','^', 'round', ' / ', 7, 8, 9, ' * ', 
-  4, 5, 6, ' - ', 1, 2, 3, ' + ', 0, '.', 'DEL', '='
+  'AC','^', 'round', ' / ', 
+  7, 8, 9, ' * ', 
+  4, 5, 6, ' - ',
+  1, 2, 3, ' + ',
+  0, '.', 'DEL', '='
 ];
 
-let valuesHtml = ''
+let valuesHtml = '';
 values.forEach((value) => {
   
   if (value === ' / ' || value === ' * ' || value === ' - ' || value === ' + ') {
-    valuesHtml += `<button id = "evalBtn" class = "evalBtn">${value}</button>`
+    valuesHtml += `<button id = "operatorBtn" class = "operators-btn">${value}</button>`;
   } else if (value === 'AC' || value === '^' || value === 'round') {
-    valuesHtml += `<button id ="upBtn" class = "upBtn">${value}</button>`
+    valuesHtml += `<button id ="upperBtn" class = "upper-btn">${value}</button>`;
   } else {
-    valuesHtml += `<button id = "valueBtn" class = "valueBtn">${value}</button>`
+    valuesHtml += `<button id = "numbersBtn" class = "numbers-btn">${value}</button>`;
   }
   document.querySelector('.cal-btn').innerHTML = valuesHtml
 })
 
-let calculated = JSON.parse(localStorage.getItem('outcome')) || ''
-document.getElementById('outcome').innerHTML = calculated
+let calculate = JSON.parse(localStorage.getItem('outcome')) ||
+ 0;
+document.getElementById('outcome').innerHTML = calculate
  
 function calculation (val) {
 
-  if (calculated === 0) {
-    calculated = ''
+  if (calculate === 0) {
+    calculate = ''
   }
   
-  if (val === 'AC') {
-    calculated = '';
-    localStorage.removeItem('outcome')
+  if (val == 'AC' || val == 'C') {
+    calculate = 0;
+    //localStorage.removeItem('outcome')
   } else if (val === '=') {
-     calculated = eval(calculated)
+     calculate = eval(calculate)
+     if (calculate === undefined) {
+      calculate = 0
+     }  
   } else if (val === 'round') {
-    calculated = Math.ceil(eval(calculated))
+    calculate = Math.ceil(eval(calculate))
   } else if (val === 'DEL') {
-    calculated += ''
-    calculated = calculated.slice(0, -1)
-    if (calculated === '') {
-      calculated = 0
+    calculate += ''
+    calculate = calculate.slice(0, -1)
+    if (calculate === '') {
+      calculate = 0
     }
-    console.log(calculated)
   } else if (val === '^') {
-    calculated = eval(calculated * calculated);
-  } else {
+    calculate += '**' //eval(calculate * calculate);
     
-    //calculated = calculated.slice(0, -1)
-  calculated += val;
+  } else {
+    calculate += val;
   }
-  localStorage.setItem('outcome', JSON.stringify(calculated))
-  //console.log('calculated')
-  console.log(calculated)
-  document.getElementById('outcome').innerHTML =`<div>${calculated}</div>`
+
+  if (calculate != 0) {
+    document.getElementById('upperBtn').innerHTML = 'C'
+  } else {
+    document.getElementById('upperBtn').innerHTML = 'AC'
+  }
+  
+  localStorage.setItem('outcome', JSON.stringify(calculate))
+  document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`
 }
 
 
@@ -58,4 +68,3 @@ document.querySelectorAll('button').forEach ((button) => {
     calculation (button.innerHTML);
   })
 })
-

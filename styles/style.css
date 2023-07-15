@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(36, 2, 67);
+  background-color: rgb(14, 0, 27);
   max-width: 290px;
   color: wheat;
 }
@@ -16,13 +16,16 @@ body button {
   row-gap: 5px;
   color: wheat;
 }
-.evalBtn {
-  background-color: orangered;
+.operators-btn {
+  background-color: rgb(149, 46, 8);
   
 }
-.upBtn {
-  background-color: rgb(88, 84, 79);
+.upper-btn {
+  background-color: rgb(81, 80, 78);
 }
-.valueBtn {
-  background-color: rgb(15, 14, 14);
+.numbers-btn {
+  background-color: rgb(14, 12, 12);
+}
+.numbers-btn:hover, .operators-btn:hover, .upper-btn :hover {
+  opacity: 0.7;
 }
