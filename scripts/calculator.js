@@ -1,3 +1,4 @@
+// values to be used
 let values = [
   'AC','DEL', '^', ' / ', 
   7, 8, 9, ' * ', 
@@ -6,6 +7,7 @@ let values = [
   0, '.', 'round', '='
 ];
 
+//generating the html buttons for each value  and placing them on the webpage
 let valuesHtml = '';
 values.forEach((value) => {
   
@@ -16,55 +18,66 @@ values.forEach((value) => {
   } else {
     valuesHtml += `<button id = "numbersBtn" class = "numbers-btn">${value}</button>`;
   }
-  document.querySelector('.cal-btn').innerHTML = valuesHtml
+  document.querySelector('.cal-btn').innerHTML = valuesHtml;
 })
 
-let calculate = JSON.parse(localStorage.getItem('outcome')) ||
- 0;
+//initializing and storing value to calculate if not found on local storage
+let calculate = JSON.parse(localStorage.getItem('outcome')) || 0;
 document.getElementById('outcome').innerHTML = calculate
  
-
+//the necessary calculations
 function calculation (val) {
 
+  // avoid inserting zero at the start of each calculation
   if (calculate === 0) {
-    calculate = ''
+    calculate = '';
   }
-  
+
+  //adding to the calculate variable
   if (val == 'AC' || val == 'C') {
     calculate = 0;
-    //localStorage.removeItem('outcome')
   } else if (val === '=') {
+    // calculating the calculate(which is in strings) using the eval function 
      calculate = eval(calculate)
      if (calculate === undefined) {
-      calculate = 0
+      calculate = 0;
      }  
   } else if (val === 'round') {
-    calculate = Math.ceil(eval(calculate))
+    //round the calculation to a whole number
+    calculate = Math.ceil(eval(calculate));
   } else if (val === 'DEL') {
-    calculate += ''
-    calculate = calculate.slice(0, -1)
+    //convert to string in places where the = button was used;
+    calculate += '';
+    calculate = calculate.slice(0, -1);
     if (calculate === '') {
-      calculate = 0
+      calculate = 0;
     }
   } else if (val === '^') {
-    calculate += '**' //eval(calculate * calculate);
-    
+    //raising the calculate to a an X number;
+    calculate += '**';
   } else {
     calculate += val;
   }
 
+  /*manipulate the innerHTML of the AC buttons in cases
+  of calculations or no calculations*/
   if (calculate != 0) {
-    document.getElementById('upperBtn').innerHTML = 'C'
+    document.getElementById('upperBtn').innerHTML = 'C';
   } else {
-    document.getElementById('upperBtn').innerHTML = 'AC'
+    document.getElementById('upperBtn').innerHTML = 'AC';
   }
   
-  localStorage.setItem('outcome', JSON.stringify(calculate))
-  document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`
-}
+  //store calculation in local storage to avoid lose of data;
+  localStorage.setItem('outcome', JSON.stringify(calculate));
+  //rendering the calculations
+  document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`;
+};
 
+//event listener for all buttons
 document.querySelectorAll('button').forEach ((button) => {
   button.addEventListener ('click', () => {
+    //each button has an innerHTMl or value
+    //pass the value as the parameter into the calculation ()
     calculation (button.innerHTML);
   })
 });
