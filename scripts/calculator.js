@@ -10,7 +10,7 @@ let values = [
 //generating the html buttons for each value  and placing them on the webpage
 let valuesHtml = '';
 values.forEach((value) => {
-    
+
   if (value === '/' || value === '*' || value === '-' || value === '+') {
     valuesHtml += `<button id = "operatorBtn" class = "operators-btn">${value}</button>`;
   } else if (value === 'AC' || value === '^' || value === 'DEL') {
@@ -79,15 +79,14 @@ function calculation (val) {
  
   //rendering the calculations
   document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`;
-
 };
 
 // to prevent the output calculation from overfloating
 const MaxRenderValue = () => {
   const maxWord = 18;
   if (calculate.length > maxWord) {
-    const wordToCut = calculate.length - maxWord
-    calculate = calculate.slice(0, -wordToCut)
+    const wordToCut = calculate.length - maxWord;
+    calculate = calculate.slice(0, -wordToCut);
   }
 }
 
