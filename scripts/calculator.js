@@ -1,9 +1,9 @@
 let values = [
-  'AC','^', 'round', ' / ', 
+  'AC','DEL', '^', ' / ', 
   7, 8, 9, ' * ', 
   4, 5, 6, ' - ',
   1, 2, 3, ' + ',
-  0, '.', 'DEL', '='
+  0, '.', 'round', '='
 ];
 
 let valuesHtml = '';
@@ -11,7 +11,7 @@ values.forEach((value) => {
   
   if (value === ' / ' || value === ' * ' || value === ' - ' || value === ' + ') {
     valuesHtml += `<button id = "operatorBtn" class = "operators-btn">${value}</button>`;
-  } else if (value === 'AC' || value === '^' || value === 'round') {
+  } else if (value === 'AC' || value === '^' || value === 'DEL') {
     valuesHtml += `<button id ="upperBtn" class = "upper-btn">${value}</button>`;
   } else {
     valuesHtml += `<button id = "numbersBtn" class = "numbers-btn">${value}</button>`;
@@ -23,6 +23,7 @@ let calculate = JSON.parse(localStorage.getItem('outcome')) ||
  0;
 document.getElementById('outcome').innerHTML = calculate
  
+
 function calculation (val) {
 
   if (calculate === 0) {
@@ -62,9 +63,8 @@ function calculation (val) {
   document.getElementById('outcome').innerHTML =`<div>${calculate}</div>`
 }
 
-
 document.querySelectorAll('button').forEach ((button) => {
   button.addEventListener ('click', () => {
     calculation (button.innerHTML);
   })
-})
+});
